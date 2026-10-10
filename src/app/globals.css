@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* dark: utilities apply in Dark mode, and in Auto mode when the OS is dark. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where([data-theme="system"], [data-theme="system"] *) {
+      @slot;
+    }
   }
 }
 
+/* ── Design tokens ───────────────────────────────────────────────
+   Paper/ink neutrals, one signal accent, a four-step severity scale.
+   White (light) is the default. Dark is opt-in, or Auto follows the OS. */
+:root {
+  --bg: #ffffff;
+  --bg-raised: #ffffff;
+  --bg-sunken: #f3f3f1;
+  --ink: #0b0d10;
+  --ink-2: #3d4148;
+  --muted: #6b6f76;
+  --line: #e6e6e2;
+  --line-strong: #d3d3cd;
+  --accent: #14a85a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3f6ec;
+  --critical: #d23c41;
+  --high: #d9620f;
+  --medium: #b57a00;
+  --low: #3e63dd;
+  --pass: #14a85a;
+  --critical-soft: #fbeaea;
+  --high-soft: #fcefe4;
+  --medium-soft: #fbf3dc;
+  --low-soft: #e9eefc;
+  --side-a: #4f46e5;
+  --side-a-soft: #eef0ff;
+  --side-b: #0e8a9e;
+  --side-b-soft: #e4f6f8;
+  --dot: rgba(11, 13, 16, 0.07);
+  --shadow: 0 1px 0 rgba(11, 13, 16, 0.04), 0 8px 24px -12px rgba(11, 13, 16, 0.12);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    --bg: #0b0d10;
+    --bg-raised: #13161b;
+    --bg-sunken: #1a1e24;
+    --ink: #f1f2f3;
+    --ink-2: #c4c7cc;
+    --muted: #8b9098;
+    --line: #23272e;
+    --line-strong: #30353d;
+    --accent: #2bd576;
+    --accent-ink: #06210f;
+    --accent-soft: #0f2a1b;
+    --critical: #ff6b6f;
+    --high: #ff8a3d;
+    --medium: #ffc53d;
+    --low: #7b9bff;
+    --pass: #2bd576;
+    --critical-soft: #2c1415;
+    --high-soft: #2b1a0e;
+    --medium-soft: #2a220c;
+    --low-soft: #141c33;
+    --side-a: #8b8cff;
+    --side-a-soft: #1b1d3d;
+    --side-b: #3cc6d9;
+    --side-b-soft: #0f2b30;
+    --dot: rgba(255, 255, 255, 0.06);
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0d10;
+  --bg-raised: #13161b;
+  --bg-sunken: #1a1e24;
+  --ink: #f1f2f3;
+  --ink-2: #c4c7cc;
+  --muted: #8b9098;
+  --line: #23272e;
+  --line-strong: #30353d;
+  --accent: #2bd576;
+  --accent-ink: #06210f;
+  --accent-soft: #0f2a1b;
+  --critical: #ff6b6f;
+  --high: #ff8a3d;
+  --medium: #ffc53d;
+  --low: #7b9bff;
+  --pass: #2bd576;
+  --critical-soft: #2c1415;
+  --high-soft: #2b1a0e;
+  --medium-soft: #2a220c;
+  --low-soft: #141c33;
+  --side-a: #8b8cff;
+  --side-a-soft: #1b1d3d;
+  --side-b: #3cc6d9;
+  --side-b-soft: #0f2b30;
+  --dot: rgba(255, 255, 255, 0.06);
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-sunken: var(--bg-sunken);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-critical: var(--critical);
+  --color-high: var(--high);
+  --color-medium: var(--medium);
+  --color-low: var(--low);
+  --color-pass: var(--pass);
+  --color-side-a: var(--side-a);
+  --color-side-a-soft: var(--side-a-soft);
+  --color-side-b: var(--side-b);
+  --color-side-b-soft: var(--side-b-soft);
+  --color-critical-soft: var(--critical-soft);
+  --color-high-soft: var(--high-soft);
+  --color-medium-soft: var(--medium-soft);
+  --color-low-soft: var(--low-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
+  --shadow-card: var(--shadow);
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* In the base layer so utilities like focus-visible:outline-none can override it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+.dot-grid {
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-rise { animation: rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes blink { 50% { opacity: 0; } }
+.caret::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
